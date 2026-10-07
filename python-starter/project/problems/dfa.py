@@ -44,11 +44,16 @@ class DFAProblem(Problem):
         #Check every word
         for word in words:
             current_state = initial_state
+            accepted = True
 
             for symbol in word:
+                if (current_state, symbol) not in transitions:
+                    accepted = False
+                    break
+
                 current_state = transitions[(current_state, symbol)]
 
-            if current_state in final_states:
+            if accepted and current_state in final_states:
                 results.append("IGEN")
             else:
                 results.append("NEM")
